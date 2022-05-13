@@ -25,14 +25,12 @@ bool loop(int u, std::vector<int> &u_1, std::vector<int> &v_1,
     auto is_v0 = !any_of(v_1.begin(), v_1.end(),
                          [&](const int v1_elem) { return v1_elem == v_elem; });
 
-    std::cout << "serching u: " << u << " connected v: " << v_elem << std::endl;
     if (is_v0) {
       // u_1,v_1更新
       u_1.push_back(edges.at(path.at(0)).first);
       v_1.push_back(v_elem);
 
       auto p_size = path.size();
-      std::cout << "found zoukadou. path_size: " << p_size << std::endl;
 
       // matches^pathを消す
       for (std::size_t i = 1; i < p_size; i += 2) {
@@ -54,11 +52,9 @@ bool loop(int u, std::vector<int> &u_1, std::vector<int> &v_1,
           });
 
       if (itr_match == matches.end()) {
-        std::cout << "ikidomari" << std::endl;
         continue; //行き止まり
       } else {
         path.push_back(*itr_match);
-        std::cout << "next u: " << edges.at(*itr_match).first << std::endl;
         if (loop(edges.at(*itr_match).first, u_1, v_1, path, matches, edges)) {
           break;
         };
@@ -66,8 +62,6 @@ bool loop(int u, std::vector<int> &u_1, std::vector<int> &v_1,
     }
     where += 1;
   }
-
-  std::cout << "ikidomari" << std::endl;
   return false; //行き止まり
 }
 
@@ -115,7 +109,6 @@ int main() {
                        [&](int u1) { return u == u1; })) {
         if (loop(u, u_1, v_1, path, matches, edges)) {
           is_found = true;
-          std::cout << "next u0" << std::endl;
           break;
         }
       }
